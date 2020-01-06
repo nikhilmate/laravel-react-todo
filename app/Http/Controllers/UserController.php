@@ -20,15 +20,19 @@ class UserController extends Controller
         );
         // if validation fails
         if($validator->fails()) {
-            return response()->json(["error" => $validator->errors()]);
+            return response()->json(["status" => "400", "error" => $validator->errors()]);
         }
         $input              =       array(
             'name'              =>        $request->name,
             'email'             =>        $request->email,
             'password'          =>        bcrypt($request->password)
         );
-        $user               =           User::create($input);
-        return response()->json(["success" => true, "status" => "success", "user" => $user]);
+        try {
+            $user               =           User::create($input);
+        } catch (\Throwable $th) {
+            return response()->json(["status" => "400", "error" => $th]);
+        }
+        return response()->json(["success" => true, "status" => "success"]);
     }
     // --------------------------- [ User Login ] ------------------------------
     public function loginUser(Request $request) {
@@ -40,13 +44,13 @@ class UserController extends Controller
         );
         // check if validation fails
         if($validator->fails()) {
-            return response()->json(["validation errors" => $validator->errors()]);
+            return response()->json(["status" => "400", "error" => $validator->errors()]);
         }
         $email  =   $request->email;
         $password = $request->password;
         $user   =   DB::table("users")->where("email", "=", $email)->first();
         if(is_null($user)) {
-            return response()->json(["success" => false, "message" => "Email doesn't exist"]);
+            return response()->json(["status" => "400", "error" => "User Doesn't Exist"]);
         }
         if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             $user = Auth::user();
@@ -54,16 +58,16 @@ class UserController extends Controller
             $success['success']     =       true;
             $success['message']     =       "Success! you are logged in successfully";
             $success['token']       =       $token;
-            return response()->json(['success' => $success ], $this->success_status);
+            return response()->json(['success' => $success, 'status' => '200' ], $this->success_status);
         }
         else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            return response()->json(['error' => 'Unauthorised', 'status' => '400'], 401);
         }
     }
     // ---------------------------- [ Use Detail ] -------------------------------
     public function userDetail() {
         $user       =       Auth::user();
-        return response()->json(['success' => $user], $this->success_status);
+        return response()->json(['success' => $user, 'status' => '200'], $this->success_status);
     }
 
     // -------------------------- [ Edit Using Passport Auth ]--------------------
