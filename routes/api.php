@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api', 'verified')->get('/user', function (Request $request) {
     return $request->user();
 });
 
 Route::post('user-registration', 'UserController@registerUser');
 Route::post('user-login', 'UserController@loginUser');
+
+Route::get('forgot-password', 'UserController@forgotPassword');
 // -------------------- [ Auth Tokens ]
-Route::group(['middleware' => 'auth:api'], function () {
+Route::middleware('auth:api', 'verified')->group(function () {
 
     Route::get('user-detail', 'UserController@userDetail');
     Route::post('update-user', 'UserController@update');
@@ -32,4 +34,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('todos/{id}', 'TodoController@getTodo');
     Route::put('todos/{id}/update', 'TodoController@updateTodo');
     Route::delete('todos/{id}/delete','TodoController@deleteTodo');
+});
+
+Route::get('email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
 });

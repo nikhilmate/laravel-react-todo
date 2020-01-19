@@ -32,6 +32,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return response()->json(["status" => "400", "error" => $th]);
         }
+        $user->sendEmailVerificationNotification();
         return response()->json(["success" => true, "status" => "success"]);
     }
     // --------------------------- [ User Login ] ------------------------------

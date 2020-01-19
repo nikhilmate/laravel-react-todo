@@ -6,12 +6,15 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-
+use App\Notifications\VerifyEmail;
+use Illuminate\Support\Facades\Hash;
 use App\Todo;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, Notifiable;
+
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -43,5 +46,22 @@ class User extends Authenticatable
     public function todos()
     {
         return $this->hasMany(Todo::class);
+    }
+    /**
+     * Send the email verification notification.
+     *
+     * @return void
+     */
+    // public function sendEmailVerificationNotification()
+    // {
+    //     $this->notify(new VerifyEmail);
+    // }
+    public function validateForPassportPasswordGrant($password)
+    {
+        if($this->active) {
+            return Hash::check($password, $this->getAuthPassword());
+        } else {
+            return false;
+        }
     }
 }
