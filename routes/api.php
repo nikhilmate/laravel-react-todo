@@ -39,8 +39,8 @@ Route::middleware('auth:api', 'verified')->group(function () {
 Route::get('email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify');
 Route::get('password/find/{token}', 'PasswordResetController@find');
 Route::post('password/create', 'PasswordResetController@create');
+Route::post('password/reset', 'PasswordResetController@reset');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('email/resend', 'VerificationController@resend')->name('verification.resend');
-    Route::post('password/reset', 'PasswordResetController@reset');
 });
