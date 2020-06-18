@@ -1,4 +1,125 @@
 html {
-  color: red;
+  -moz-text-size-adjust: none;
+       text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: 100%;
+}
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+a:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+ul {
+  list-style: none;
+}
+
+b,
+strong {
+  font-weight: normal;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+input,
+textarea,
+select,
+button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  border-radius: 0;
+  font-family: inherit;
+  font-weight: inherit;
+  line-height: normal;
+  font-size: inherit;
+  box-shadow: none;
+  outline: none;
+}
+
+input[type=submit] {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+main,
+section,
+footer,
+header,
+nav {
+  display: block;
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+}
+
+.no-break {
+  white-space: nowrap;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Relaway", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  letter-spacing: normal;
+  font-size: 14px;
+  line-height: 1.5;
+  height: 100%;
+}
+
+.comn__container {
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
