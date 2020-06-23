@@ -101,6 +101,12 @@ return [
         ],
     ],
 
+    'social' => [
+        'providers' => [
+            'google', 'facebook'
+        ]
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
