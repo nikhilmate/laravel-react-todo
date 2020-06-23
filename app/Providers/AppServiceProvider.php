@@ -2,27 +2,19 @@
 
 namespace App\Providers;
 
+use App\Services\SocialUserResolver;
+use Coderello\SocialGrant\Resolvers\SocialUserResolverInterface;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * All of the container bindings that should be registered.
      *
-     * @return void
+     * @var array
      */
-    public function register()
-    {
-        //
-    }
-
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
+    public $bindings = [
+        SocialUserResolverInterface::class => SocialUserResolver::class,
+    ];
 }
+

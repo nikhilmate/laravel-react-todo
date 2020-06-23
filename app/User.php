@@ -64,4 +64,9 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
     }
+
+    public function linkedSocialAccounts()
+    {
+        return $this->hasMany(LinkedSocialAccount::class);
+    }
 }
